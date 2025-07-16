@@ -1,0 +1,8 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /cuentas_x_cobrar/
+
+    RewriteRule ^$ public/ [L]
+    RewriteCond %{REQUEST_URI} !^/cuentas_x_cobrar/public/ [NC] # No reescribir si ya está en la carpeta public
+    RewriteRule (.*) public/$1 [L]
+</IfModule>
