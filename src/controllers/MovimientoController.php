@@ -108,6 +108,12 @@ class MovimientoController {
         include __DIR__ . '/../views/movimientos/create.php';
     }
 
+    //Aqui llamamos a getultimosMovimientosPorClientes para obtener los últimos movimientos de los clientes
+    public function getUltimosMovimientosPorClientes($idsClientes) {
+        $ultimosMovimientos = Movimiento::getUltimosMovimientosPorCliente($idsClientes);
+        return $ultimosMovimientos;
+    }
+
     // --- Métodos Opcionales (Descomentar y usar si se implementan en el modelo y rutas) ---
     /*
     public function edit($movimiento_id) {

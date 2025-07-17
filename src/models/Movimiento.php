@@ -128,4 +128,40 @@ class Movimiento {
         $stmt = $pdo->prepare('DELETE FROM movimientos_cliente WHERE movimiento_id = ?');
         return $stmt->execute([$movimiento_id]);
     }
+
+   public static function getUltimosMovimientosPorCliente($cliente_ids) {
+    global $pdo;
+    if (empty($cliente_ids)) {
+        return [];
+    }
+
+    $placeholders = implode(',', array_fill(0, count($cliente_ids), '?'));
+
+    $sql = "
+        SELECT 
+            cliente_id,
+            MAX(fecha) AS fecha,
+            SUM(debe) - SUM(haber) AS saldo
+        FROM movimientos_cliente
+        WHERE cliente_id IN ($placeholders)
+        GROUP BY cliente_id
+    ";
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute($cliente_ids);
+
+    // Convertir a array indexado por cliente_id
+    $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $formateado = [];
+    foreach ($resultados as $fila) {
+        $formateado[$fila['cliente_id']] = [
+            'fecha' => $fila['fecha'],
+            'saldo' => (float)$fila['saldo'],
+        ];
+    }
+
+    return $formateado;
+}
+
+
 }

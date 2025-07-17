@@ -18,6 +18,8 @@ foreach ($movimientos as $movimiento) {
 
 ?>
 <div class="container">
+    <!-- Boton para regresar a clientes -->
+    <a href="<?php echo BASE_URL; ?>/clientes" class="btn btn-secondary mb-3">Volver a Clientes</a>
     <div class="card shadow-sm mb-4">
         <div class="card-body">
             <div class="row align-items-center">
