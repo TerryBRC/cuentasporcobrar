@@ -1,6 +1,6 @@
 <?php
 // src/controllers/ClienteController.php
-require_once __DIR__ . '/../models/Cliente.php';
+require_once __DIR__ . '/../models/Cliente.php'; // Correct path for models
 
 class ClienteController {
     public function index() {
@@ -16,9 +16,16 @@ class ClienteController {
     public function create() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $nombre = $_POST['nombre'] ?? '';
-            if ($nombre) {
-                Cliente::create($nombre);
-                header('Location: clientes');
+            $identificacion = $_POST['identificacion'] ?? '';
+            $direccion = $_POST['direccion'] ?? '';
+            $telefono = $_POST['telefono'] ?? '';
+            // For 'create', 'activo' is usually set to 1 by default, or from a checkbox
+            $activo = isset($_POST['activo']) ? 1 : 0; // If checkbox is checked, it's 1, else 0
+
+            // Add $activo to the Cliente::create call
+            if ($nombre && $identificacion && $direccion && $telefono) { // Add validation for $activo if it's strictly required from form
+                Cliente::create($nombre, $identificacion, $direccion, $telefono, $activo);
+                header('Location: ' . BASE_URL . '/clientes');
                 exit;
             }
         }
@@ -26,12 +33,20 @@ class ClienteController {
     }
 
     public function edit($id) {
-        $cliente = Cliente::getById($id);
+        $cliente = Cliente::getById($id); // Get existing client data
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $nombre = $_POST['nombre'] ?? '';
-            if ($nombre) {
-                Cliente::update($id, $nombre);
-                header('Location: clientes');
+            $identificacion = $_POST['identificacion'] ?? '';
+            $direccion = $_POST['direccion'] ?? '';
+            $telefono = $_POST['telefono'] ?? '';
+            // Retrieve 'activo' from the form (checkbox value: 1 if checked, 0 if not present)
+            $activo = isset($_POST['activo']) ? 1 : 0;
+
+            if ($nombre) { // Basic validation
+                // Pass 'activo' to the Cliente::update call
+                Cliente::update($id, $nombre, $identificacion, $direccion, $telefono, $activo);
+                header('Location: ' . BASE_URL . '/clientes');
                 exit;
             }
         }
@@ -40,7 +55,7 @@ class ClienteController {
 
     public function delete($id) {
         Cliente::delete($id);
-        header('Location: clientes');
+        header('Location: ' . BASE_URL . '/clientes');
         exit;
     }
 }

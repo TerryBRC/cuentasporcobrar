@@ -6,7 +6,11 @@ USE LibroCuentas;
 -- Tabla de Clientes
 CREATE TABLE IF NOT EXISTS clientes (
     cliente_id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL
+    nombre VARCHAR(100) NOT NULL,
+    identificacion VARCHAR(30) UNIQUE NOT NULL,
+    direccion TEXT,
+    telefono VARCHAR(20),
+    activo BOOLEAN DEFAULT TRUE,
 );
 
 -- Tabla de Movimientos estilo libro mayor

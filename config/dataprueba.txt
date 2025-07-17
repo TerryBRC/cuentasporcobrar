@@ -1,0 +1,29 @@
+INSERT INTO `clientes` (`cliente_id`, `nombre`, `identificacion`, `direccion`, `telefono`, `activo`) VALUES
+(1, 'Juan Pérez Rodríguez', '001-010180-0000A', 'Calle Principal, Casa #123, Managua', '88881111', 1),
+(2, 'María García López', '002-050575-0010B', 'Residencial Las Flores, Bloque C, León', '77772222', 1),
+(3, 'Pedro Martínez Sánchez', '003-101090-0020C', 'Ave. Central, Edificio Sol, Apt. 5, Granada', '55553333', 0),
+(4, 'Ana Díaz Ruiz', '004-121288-0030D', 'Barrio El Carmen, Semáforos de la UCA 2c. al sur, 1/2c. abajo, Managua', '22224444', 1),
+(5, 'Carlos Soto Vargas', '005-030395-0040E', 'Km 10 Carretera Sur, Finca La Esperanza, Jinotepe', '88885555', 1),
+(6, 'Laura Morales Reyes', '006-070782-0050F', 'Colonia Centroamérica, del Palo de Mango 1c. al lago, Masaya', '77776666', 0),
+(7, 'Miguel Hernández Castillo', '007-090970-0060G', 'Reparto Schick, Contiguo al parque, Estelí', '55557777', 1),
+(8, 'Sofía Jiménez Núñez', '008-020292-0070H', 'Costado este de la Catedral, Rivas', '22228888', 1);
+-- Movimientos para el Cliente ID 1 (ej. "Juan Pérez")
+INSERT INTO `movimientos_cliente` (`cliente_id`, `fecha`, `numero_comprobante`, `descripcion`, `debe`, `haber`) VALUES
+(1, '2024-06-01', 'INV001', 'Factura por servicios de consultoría', 500.00, 0.00),
+(1, '2024-06-15', 'REC001', 'Pago de factura INV001', 0.00, 300.00),
+(1, '2024-07-01', 'INV002', 'Factura por desarrollo de software', 1200.00, 0.00),
+(1, '2024-07-10', 'ND001', 'Nota de débito por intereses de mora', 25.50, 0.00),
+(1, '2024-07-20', 'REC002', 'Pago parcial de factura INV002', 0.00, 500.00);
+
+-- Movimientos para el Cliente ID 2 (ej. "María García")
+INSERT INTO `movimientos_cliente` (`cliente_id`, `fecha`, `numero_comprobante`, `descripcion`, `debe`, `haber`) VALUES
+(2, '2024-06-05', 'SERV010', 'Servicio de mantenimiento web', 350.00, 0.00),
+(2, '2024-06-20', 'PAG005', 'Pago completo de servicio SERV010', 0.00, 350.00),
+(2, '2024-07-03', 'VENTA001', 'Venta de producto A', 150.00, 0.00),
+(2, '2024-07-03', 'VENTA002', 'Venta de producto B', 75.00, 0.00),
+(2, '2024-07-25', 'REC003', 'Pago por productos A y B', 0.00, 225.00);
+
+-- Movimiento para un Cliente ID 3 (ej. "Empresa XYZ") - Ejemplo de saldo negativo si aplica
+INSERT INTO `movimientos_cliente` (`cliente_id`, `fecha`, `numero_comprobante`, `descripcion`, `debe`, `haber`) VALUES
+(3, '2024-07-01', 'ANTICIPO01', 'Anticipo de cliente para futuro servicio', 0.00, 200.00),
+(3, '2024-07-15', 'INV003', 'Factura por servicios prestados', 180.00, 0.00); -- Aquí el cliente tendría un saldo a favor de 20.00

@@ -1,7 +1,11 @@
-RewriteEngine On
-RewriteBase /cuentas_x_cobrar/public/
+<IfModule mod_rewrite.c>
+    RewriteEngine On
 
-# Redirige todo menos archivos y carpetas existentes a index.php
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ index.php [QSA,L]
+    # Si la solicitud es para un archivo o directorio existente, no la reescribas.
+    # Esto es vital para CSS, JS, imágenes, etc.
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+
+    # Reescribe todo lo demás a index.php
+    RewriteRule ^(.*)$ index.php [QSA,L]
+</IfModule>
