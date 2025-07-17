@@ -8,7 +8,7 @@ class Cliente {
         // Si solo quieres mostrar clientes activos por defecto, modifica esta consulta:
         // $stmt = $pdo->query('SELECT cliente_id, nombre, identificacion, direccion, telefono, activo FROM clientes WHERE activo = 1 ORDER BY nombre');
         // O si quieres mostrarlos todos y gestionar la visibilidad en la vista:
-        $stmt = $pdo->query('SELECT cliente_id, nombre, identificacion, direccion, telefono, activo FROM clientes ORDER BY nombre');
+        $stmt = $pdo->query('SELECT cliente_id, nombre, identificacion, direccion, telefono, frecuencia_pago, activo FROM clientes ORDER BY nombre');
         return $stmt->fetchAll();
     }
 
@@ -19,10 +19,10 @@ class Cliente {
         return $stmt->fetch();
     }
 
-    public static function create($nombre, $identificacion, $direccion, $telefono, $activo = 1) {
+    public static function create($nombre, $identificacion, $frecuencia_pago, $direccion, $telefono) {
         global $pdo;
-        $stmt = $pdo->prepare('INSERT INTO clientes (nombre, identificacion, direccion, telefono, activo) VALUES (?, ?, ?, ?, ?)');
-        return $stmt->execute([$nombre, $identificacion, $direccion, $telefono, $activo]);
+        $stmt = $pdo->prepare('INSERT INTO clientes (nombre, identificacion, frecuencia_pago, direccion, telefono, activo) VALUES (?, ?, ?, ?, ?, ?)');
+        return $stmt->execute([$nombre, $identificacion, $frecuencia_pago, $direccion, $telefono, 1]); // Por defecto, 'activo' es 1 (true)
     }
 
     public static function update($id, $nombre, $identificacion, $direccion, $telefono, $activo) {

@@ -18,29 +18,40 @@ foreach ($movimientos as $movimiento) {
 
 ?>
 <div class="container">
-    <h2>Movimientos del Cliente: <?= htmlspecialchars($cliente['nombre'] ?? 'Desconocido') ?></h2>
-    <p>Identificación: <?= htmlspecialchars($cliente['identificacion'] ?? '') ?></p>
-    <p>Teléfono: <?= htmlspecialchars($cliente['telefono'] ?? '') ?></p>
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <div class="row align-items-center">
+                <!-- Columna para la información del cliente -->
+                <div class="col-md-8">
+                    <h2 class="card-title h4 text-dark mb-2">Movimientos del Cliente: <?= htmlspecialchars($cliente['nombre'] ?? 'Desconocido') ?></h2>
+                    <p class="card-text text-muted">Identificación: <?= htmlspecialchars($cliente['identificacion'] ?? '') ?></p>
+                    <p class="card-text text-muted mb-md-0">Teléfono: <?= htmlspecialchars($cliente['telefono'] ?? '') ?></p>
+                </div>
 
-    <hr>
-
-    <div class="row">
-        <div class="col-md-5">
-            <div class="card bg-light mb-4">
-                <div class="card-body">
-                    <h4 class="card-title">Saldo Actual:
+                <!-- Columna para el saldo actual (a la derecha) -->
+                <div class="col-md-4 text-md-right mt-3 mt-md-0">
+                    <h4 class="h5 text-secondary mb-0">Saldo Actual:</h4>
+                    <h4 class="h4 font-weight-bold mb-0">
                         <span class="<?= ($saldo_periodo_visible < 0) ? 'text-danger' : 'text-success' ?>">
                             <?= number_format($saldo_periodo_visible, 2) ?> C$
                         </span>
                     </h4>
                     <?php if (!$fecha_inicio_val && !$fecha_fin_val): ?>
-                        <p class="card-text text-muted">Este es el saldo acumulado de todos los movimientos registrados para este cliente.</p>
+                        <p class="card-text text-muted small">Este es el saldo acumulado de todos los movimientos registrados para este cliente.</p>
                     <?php else: ?>
-                        <p class="card-text text-muted">Este es el saldo final para el rango de fechas seleccionado.</p>
-                        <p class="card-text text-muted">Para ver el saldo total actual del cliente, <a href="<?php echo BASE_URL; ?>/clientes/<?= htmlspecialchars($cliente['cliente_id']) ?>/movimientos">limpie los filtros de fecha</a>.</p>
+                        <p class="card-text text-muted small">Este es el saldo final para el rango de fechas seleccionado.</p>
+                        <p class="card-text text-muted small">Para ver el saldo total actual del cliente, <a href="<?php echo BASE_URL; ?>/clientes/<?= htmlspecialchars($cliente['cliente_id']) ?>/movimientos" class="text-primary">limpie los filtros de fecha</a>.</p>
                     <?php endif; ?>
                 </div>
             </div>
+
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="row">
+        <div class="col-md-5">
 
             <div class="card mb-4">
                 <div class="card-header bg-success text-white">
@@ -50,15 +61,11 @@ foreach ($movimientos as $movimiento) {
                     <form action="<?php echo BASE_URL; ?>/clientes/<?= htmlspecialchars($cliente['cliente_id']) ?>/movimientos/crear" method="post">
                         <input type="hidden" name="is_payment" value="1">
                         <div class="row g-3">
-                            <div class="col-md-4">
-                                <label for="fecha_pago" class="form-label">Fecha del Pago:</label>
-                                <input type="date" class="form-control" id="fecha_pago" name="fecha" value="<?= date('Y-m-d') ?>" required>
-                            </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <label for="monto_pago" class="form-label">Monto del Pago (C$):</label>
                                 <input type="number" class="form-control" id="monto_pago" name="haber" step="0.01" min="0.01" required>
                             </div>
-                            <div class="col-md-4"> <label for="numero_comprobante_pago" class="form-label">No. Comprobante:</label>
+                            <div class="col-md-6"> <label for="numero_comprobante_pago" class="form-label">No. Comprobante:</label>
                                 <input type="text" class="form-control" id="numero_comprobante_pago" name="numero_comprobante" placeholder="Opcional">
                             </div>
                             <div class="col-12"> <label for="descripcion_pago" class="form-label">Descripción del Pago:</label>
@@ -103,7 +110,6 @@ foreach ($movimientos as $movimiento) {
                         <th>Debe (C$)</th>
                         <th>Haber (C$)</th>
                         <th>SALDO (C$)</th>
-                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -132,7 +138,7 @@ foreach ($movimientos as $movimiento) {
                         <?php endforeach; ?>
                     <?php else: ?>
                         <tr>
-                            <td colspan="7" class="text-center">No hay movimientos registrados para este cliente en el rango de fechas seleccionado.</td>
+                            <td colspan="6" class="text-center">No hay movimientos registrados para este cliente en el rango de fechas seleccionado.</td>
                         </tr>
                     <?php endif; ?>
                 </tbody>
@@ -144,7 +150,7 @@ foreach ($movimientos as $movimiento) {
                                 <?= number_format($saldo_periodo_visible, 2) ?>
                             </span>
                         </th>
-                        <th></th>
+
                     </tr>
                 </tfoot>
             </table>

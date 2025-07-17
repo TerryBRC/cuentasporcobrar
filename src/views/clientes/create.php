@@ -14,6 +14,14 @@ include __DIR__ . '/../layout/header.php';
             <input type="text" name="identificacion" id="identificacion" class="form-control">
         </div>
         <div class="mb-3">
+            <label for="frecuencia" class="form-label">Frecuencia de Pago</label>
+            <select name="frecuencia" id="frecuencia" class="form-select">
+                <option value="">Seleccione una opción</option>
+                <option value="Mensual">Mensual</option>
+                <option value="Quincenal">Quincenal</option>
+                <option value="Semanal">Semanal</option>
+            </select>
+        <div class="mb-3">
             <label for="direccion" class="form-label">Dirección</label>
             <input type="text" name="direccion" id="direccion" class="form-control">
         </div>

@@ -8,6 +8,21 @@ include __DIR__ . '/../layout/header.php';
         <li class="list-group-item"><strong>ID:</strong> <?= htmlspecialchars($cliente['cliente_id']) ?></li>
         <li class="list-group-item"><strong>Nombre:</strong> <?= htmlspecialchars($cliente['nombre']) ?></li>
         <li class="list-group-item"><strong>Identificación:</strong> <?= htmlspecialchars($cliente['identificacion']) ?></li>
+        <li class="list-group-item"><strong>Frecuencia de Pago:</strong>
+            <?php
+            // Calcular la frecuencia de pagos
+            $frecuencia = '';
+            if ($cliente['frecuencia'] == 'mensual') {
+                $frecuencia = 'Mensual';
+            } elseif ($cliente['frecuencia'] == 'quincenal') {
+                $frecuencia = 'Quincenal';
+            } elseif ($cliente['frecuencia'] == 'semanal') {
+                $frecuencia = 'Semanal';
+            } else {
+                $frecuencia = 'No especificada';
+            }
+            echo htmlspecialchars($frecuencia);
+            ?>
         <li class="list-group-item"><strong>Dirección:</strong> <?= htmlspecialchars($cliente['direccion']) ?></li>
         <li class="list-group-item"><strong>Teléfono:</strong> <?= htmlspecialchars($cliente['telefono']) ?></li>
         <li class="list-group-item"><strong>Activo:</strong> <?= ($cliente['activo'] ?? 0) ? 'Sí' : 'No' ?></li> </ul>

@@ -41,13 +41,13 @@ class Movimiento {
      * @param float $haber Cantidad en el "Haber".
      * @return bool True si la operación fue exitosa, false en caso contrario.
      */
-    public static function create($cliente_id, $fecha, $numero_comprobante, $descripcion, $debe, $haber) {
+    public static function create($cliente_id, $numero_comprobante, $descripcion, $debe, $haber) {
         global $pdo;
         $stmt = $pdo->prepare(
-            'INSERT INTO movimientos_cliente (cliente_id, fecha, numero_comprobante, descripcion, debe, haber)
-             VALUES (?, ?, ?, ?, ?, ?)'
+            'INSERT INTO movimientos_cliente (cliente_id, numero_comprobante, descripcion, debe, haber)
+             VALUES (?, ?, ?, ?, ?)'
         );
-        return $stmt->execute([$cliente_id, $fecha, $numero_comprobante, $descripcion, $debe, $haber]);
+        return $stmt->execute([$cliente_id, $numero_comprobante, $descripcion, $debe, $haber]);
     }
 
     /**
@@ -108,13 +108,13 @@ class Movimiento {
      * @param float $haber Nuevo valor en el "Haber".
      * @return bool True si la operación fue exitosa, false en caso contrario.
      */
-    public static function update($movimiento_id, $fecha, $numero_comprobante, $descripcion, $debe, $haber) {
+    public static function update($movimiento_id, $numero_comprobante, $descripcion, $debe, $haber) {
         global $pdo;
         $stmt = $pdo->prepare(
-            'UPDATE movimientos_cliente SET fecha = ?, numero_comprobante = ?, descripcion = ?, debe = ?, haber = ?
+            'UPDATE movimientos_cliente SET numero_comprobante = ?, descripcion = ?, debe = ?, haber = ?
              WHERE movimiento_id = ?'
         );
-        return $stmt->execute([$fecha, $numero_comprobante, $descripcion, $debe, $haber, $movimiento_id]);
+        return $stmt->execute([$numero_comprobante, $descripcion, $debe, $haber, $movimiento_id]);
     }
 
     /**

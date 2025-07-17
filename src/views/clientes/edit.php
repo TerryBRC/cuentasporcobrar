@@ -14,7 +14,14 @@ include __DIR__ . '/../layout/header.php';
             <label for="identificacion" class="form-label">Identificación</label>
             <input type="text" name="identificacion" id="identificacion" class="form-control" value="<?= htmlspecialchars($cliente['identificacion']) ?? '' ?>" required>
         </div>
-
+        <div class="mb-3">
+            <label for="frecuencia" class="form-label">Frecuencia de Pago</label>
+            <select name="frecuencia" id="frecuencia" class="form-select">
+                <option value="">Seleccione una opción</option>
+                <option value="mensual" <?= ($cliente['frecuencia'] ?? '') === 'mensual' ? 'selected' : '' ?>>Mensual</option>
+                <option value="quincenal" <?= ($cliente['frecuencia'] ?? '') === 'quincenal' ? 'selected' : '' ?>>Quincenal</option>
+                <option value="semanal" <?= ($cliente['frecuencia'] ?? '') === 'semanal' ? 'selected' : '' ?>>Semanal</option>
+            </select>
         <div class="mb-3">
             <label for="direccion" class="form-label">Dirección</label>
             <input type="text" name="direccion" id="direccion" class="form-control" value="<?= htmlspecialchars($cliente['direccion']) ?? '' ?>" required>

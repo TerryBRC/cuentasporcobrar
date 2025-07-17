@@ -11,13 +11,14 @@ CREATE TABLE IF NOT EXISTS clientes (
     direccion TEXT,
     telefono VARCHAR(20),
     activo BOOLEAN DEFAULT TRUE,
+    frecuencia_pago ENUM('Semanal', 'Quincenal', 'Mensual') DEFAULT 'Semanal'
 );
 
 -- Tabla de Movimientos estilo libro mayor
 CREATE TABLE IF NOT EXISTS movimientos_cliente (
     movimiento_id INT AUTO_INCREMENT PRIMARY KEY,
     cliente_id INT NOT NULL,
-    fecha DATE NOT NULL,
+    fecha DATETIME DEFAULT CURRENT_TIMESTAMP,
     numero_comprobante VARCHAR(50),
     descripcion VARCHAR(255) NOT NULL,
     debe DECIMAL(10,2) DEFAULT 0.00,
@@ -48,7 +49,6 @@ DELIMITER $$
 
 CREATE PROCEDURE insertar_movimiento (
     IN p_cliente_id INT,
-    IN p_fecha DATE,
     IN p_numero_comprobante VARCHAR(50),
     IN p_descripcion VARCHAR(255),
     IN p_debe DECIMAL(10,2),
@@ -56,9 +56,9 @@ CREATE PROCEDURE insertar_movimiento (
 )
 BEGIN
     INSERT INTO movimientos_cliente (
-        cliente_id, fecha, numero_comprobante, descripcion, debe, haber
+        cliente_id, numero_comprobante, descripcion, debe, haber
     ) VALUES (
-        p_cliente_id, p_fecha, p_numero_comprobante, p_descripcion, p_debe, p_haber
+        p_cliente_id, p_numero_comprobante, p_descripcion, p_debe, p_haber
     );
 END $$
 

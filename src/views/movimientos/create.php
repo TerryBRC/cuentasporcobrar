@@ -8,10 +8,6 @@ include __DIR__ . '/../layout/header.php';
 
     <form action="<?php echo BASE_URL; ?>/clientes/<?= htmlspecialchars($cliente['cliente_id']) ?>/movimientos/crear" method="post">
         <div class="mb-3">
-            <label for="fecha" class="form-label">Fecha del Cargo:</label>
-            <input type="date" class="form-control" id="fecha" name="fecha" value="<?= date('Y-m-d') ?>" required>
-        </div>
-        <div class="mb-3">
             <label for="numero_comprobante" class="form-label">Número de Comprobante:</label>
             <input type="text" class="form-control" id="numero_comprobante" name="numero_comprobante" placeholder="Opcional">
         </div>

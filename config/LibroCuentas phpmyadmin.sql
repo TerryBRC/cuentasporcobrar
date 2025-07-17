@@ -25,11 +25,11 @@ DELIMITER $$
 --
 -- Procedimientos
 --
-CREATE DEFINER=`root`@`localhost` PROCEDURE `insertar_movimiento` (IN `p_cliente_id` INT, IN `p_fecha` DATE, IN `p_numero_comprobante` VARCHAR(50), IN `p_descripcion` VARCHAR(255), IN `p_debe` DECIMAL(10,2), IN `p_haber` DECIMAL(10,2))   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insertar_movimiento` (IN `p_cliente_id` INT, IN `p_numero_comprobante` VARCHAR(50), IN `p_descripcion` VARCHAR(255), IN `p_debe` DECIMAL(10,2), IN `p_haber` DECIMAL(10,2))   BEGIN
     INSERT INTO movimientos_cliente (
-        cliente_id, fecha, numero_comprobante, descripcion, debe, haber
+        cliente_id, numero_comprobante, descripcion, debe, haber
     ) VALUES (
-        p_cliente_id, p_fecha, p_numero_comprobante, p_descripcion, p_debe, p_haber
+        p_cliente_id, p_numero_comprobante, p_descripcion, p_debe, p_haber
     );
 END$$
 
@@ -61,7 +61,8 @@ CREATE TABLE `clientes` (
   `identificacion` varchar(30) NOT NULL,
   `direccion` text NOT NULL,
   `telefono` varchar(20) NOT NULL,
-  `activo` tinyint(1) NOT NULL DEFAULT 1
+  `activo` tinyint(1) NOT NULL DEFAULT 1,
+  `frecuencia_pago` ENUM('Semanal', 'Quincenal', 'Mensual') DEFAULT 'Semanal'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -99,7 +100,7 @@ CREATE TABLE `libro_mayor_clientes` (
 CREATE TABLE `movimientos_cliente` (
   `movimiento_id` int(11) NOT NULL,
   `cliente_id` int(11) NOT NULL,
-  `fecha` date NOT NULL,
+  `fecha` DATETIME DEFAULT CURRENT_TIMESTAMP,
   `numero_comprobante` varchar(50) DEFAULT NULL,
   `descripcion` varchar(255) NOT NULL,
   `debe` decimal(10,2) DEFAULT 0.00,

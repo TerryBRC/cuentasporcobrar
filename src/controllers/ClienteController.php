@@ -19,12 +19,11 @@ class ClienteController {
             $identificacion = $_POST['identificacion'] ?? '';
             $direccion = $_POST['direccion'] ?? '';
             $telefono = $_POST['telefono'] ?? '';
-            // For 'create', 'activo' is usually set to 1 by default, or from a checkbox
-            $activo = isset($_POST['activo']) ? 1 : 0; // If checkbox is checked, it's 1, else 0
+            $frecuencia = $_POST['frecuencia'] ?? ''; // Retrieve frequency from form
 
             // Add $activo to the Cliente::create call
             if ($nombre && $identificacion && $direccion && $telefono) { // Add validation for $activo if it's strictly required from form
-                Cliente::create($nombre, $identificacion, $direccion, $telefono, $activo);
+                Cliente::create($nombre, $identificacion, $frecuencia, $direccion, $telefono);
                 header('Location: ' . BASE_URL . '/clientes');
                 exit;
             }

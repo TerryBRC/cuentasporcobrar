@@ -68,7 +68,6 @@ class MovimientoController {
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $fecha = $_POST['fecha'] ?? '';
             $numero_comprobante = $_POST['numero_comprobante'] ?? null;
             $descripcion = $_POST['descripcion'] ?? '';
 
@@ -93,7 +92,7 @@ class MovimientoController {
 
             // Validation: Ensure description is not empty and at least one value (Debe or Haber) is positive
             if (!empty($descripcion) && ($debe > 0 || $haber > 0)) {
-                Movimiento::create($cliente_id, $fecha, $numero_comprobante, $descripcion, $debe, $haber);
+                Movimiento::create($cliente_id, $numero_comprobante, $descripcion, $debe, $haber);
                 header('Location: ' . BASE_URL . '/clientes/' . $cliente_id . '/movimientos');
                 exit;
             } else {

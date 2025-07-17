@@ -18,6 +18,7 @@ include __DIR__ . '/../layout/header.php';
                 <th>Nombre</th>
                 <th>Identificación</th>
                 <th>Teléfono</th>
+                <th>Frecuencia</th>
                 <th>Estado</th>
                 <th>Acciones</th> </tr>
         </thead>
@@ -29,6 +30,22 @@ include __DIR__ . '/../layout/header.php';
                         <td><?= htmlspecialchars($cliente['nombre']) ?></td>
                         <td><?= htmlspecialchars($cliente['identificacion']) ?></td>
                         <td><?= htmlspecialchars($cliente['telefono']) ?></td>
+                        <td>
+                            <?php
+                            // Calcular la frecuencia de pagos
+                            $frecuencia = '';
+                            if ($cliente['frecuencia_pago'] == 'Mensual') {
+                                $frecuencia = 'Mensual';
+                            } elseif ($cliente['frecuencia_pago'] == 'Quincenal') {
+                                $frecuencia = 'Quincenal';
+                            } elseif ($cliente['frecuencia_pago'] == 'Semanal') {
+                                $frecuencia = 'Semanal';
+                            } else {
+                                $frecuencia = 'No especificada';
+                            }
+                            echo htmlspecialchars($frecuencia);
+                            ?>
+                        </td>
                         <td>
                             <?= $cliente['activo'] ? '<span class="badge bg-success">Activo</span>' : '<span class="badge bg-danger">Inactivo</span>' ?>
                         </td>
